@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class mineScript : MonoBehaviour
+public class mineScript : NetworkBehaviour
 {
     //Prefab for the explosion
     public GameObject ExplosionPrefab;
@@ -14,12 +15,6 @@ public class mineScript : MonoBehaviour
     {
         //run explode code after 2 seconds
         Invoke("Explode", 2);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void Explode()

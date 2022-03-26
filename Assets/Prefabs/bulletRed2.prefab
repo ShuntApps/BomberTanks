@@ -12,7 +12,9 @@ GameObject:
   - component: {fileID: 2637478392281887697}
   - component: {fileID: 467622401}
   - component: {fileID: 467622402}
-  - component: {fileID: 467622403}
+  - component: {fileID: 1078154845758204086}
+  - component: {fileID: 4410954620184065200}
+  - component: {fileID: 7251273142794696772}
   m_Layer: 0
   m_Name: bulletRed2
   m_TagString: RedBullet
@@ -49,6 +51,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -121,7 +124,7 @@ CapsuleCollider2D:
   m_Offset: {x: 1.6394665e-16, y: 0.0076304697}
   m_Size: {x: 0.1599997, y: 0.25526077}
   m_Direction: 0
---- !u!114 &467622403
+--- !u!114 &1078154845758204086
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,6 +133,57 @@ MonoBehaviour:
   m_GameObject: {fileID: 601674801523406248}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 418a19f34cbd73c4086d90d9a5bc48c7, type: 3}
+  m_Script: {fileID: 11500000, guid: 618005ba022490e45b3d5cb59b2c5a88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4410954620184065200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601674801523406248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  visible: 0
+  m_AssetId: b1f6940928a50774abbf3248b3bffc40
+  hasSpawned: 0
+--- !u!114 &7251273142794696772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601674801523406248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  sendInterval: 0.05
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 0
+  bufferTimeMultiplier: 1
+  bufferSizeLimit: 64
+  catchupThreshold: 4
+  catchupMultiplier: 0.1
+  onlySyncOnChange: 1
+  bufferResetMultiplier: 5
+  positionSensitivity: 0.01
+  rotationSensitivity: 0.01
+  scaleSensitivity: 0.01
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}

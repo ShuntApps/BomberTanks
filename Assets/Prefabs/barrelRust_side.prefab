@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1232288619493611479}
   - component: {fileID: 1232288619493611480}
-  - component: {fileID: -705567538325447702}
+  - component: {fileID: 7681975595933731823}
+  - component: {fileID: -8580212618446297679}
   m_Layer: 8
   m_Name: barrelRust_side
   m_TagString: Untagged
@@ -47,6 +48,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -82,7 +84,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-705567538325447702
+--- !u!114 &7681975595933731823
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,11 +93,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1232288619493611481}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74b6ede33e2e79e448c98d86beaa1283, type: 3}
+  m_Script: {fileID: 11500000, guid: 205239113d9d7e74694b464789d719d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ExplosionPrefab: {fileID: 8690078562830541569, guid: 96925e69b29117246b9a70c7b6060f4b,
+  ExplosionPrefab: {fileID: 8690078562830541569, guid: df9b1dd72ac4a8c488439b378d0ccb9d,
     type: 3}
   wallLayer:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &-8580212618446297679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232288619493611481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  visible: 0
+  m_AssetId: e4fcab286098f7145b25e7d51ae238e5
+  hasSpawned: 0

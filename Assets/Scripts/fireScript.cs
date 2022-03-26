@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Mirror;
 
-public class fireScript : MonoBehaviour
+public class fireScript : NetworkBehaviour
 {
     [Header("Prefabs")]
     public GameObject bullet;
     public GameObject mine;
     [Header("Keys to press")]
     public KeyCode fireKey;
-    public KeyCode bombKey;
+    public KeyCode mineKey;
     [Header("Muzzle Location")]
-    public Transform muzzle;
+    [SerializeField] Transform muzzle;
 
     [Header("Shooting Settings")]
     public int ammoCount;
@@ -28,26 +29,51 @@ public class fireScript : MonoBehaviour
     void Update()
     {
         //if the fire key we assigned is pressed AND the ammo is greater than 1 AND the time until next shot is past
-        if((Input.GetKeyDown(fireKey))&&ammoCount>1&&(Time.time>timeTilNextShot))
+        if((Input.GetKeyDown(fireKey))&&ammoCount>0&&(Time.time>timeTilNextShot))
         {
-            //create a new bullet
-            GameObject newBullet=Instantiate(bullet, muzzle.position, Quaternion.identity);
-            //make sure the rotation is right otherwise bullet will just ignore rotation
-            newBullet.transform.rotation = transform.rotation;
-            //ignore collisions with itself (so we don't shoot ourselves)
-            Physics2D.IgnoreCollision(newBullet.GetComponent<CapsuleCollider2D>(), gameObject.GetComponent<BoxCollider2D>());
-            //update time til next shot and ammo
-            timeTilNextShot += 2;
-            ammoCount--;
+            if (this.isLocalPlayer)
+            {
+                this.CmdShoot();
+            }
+            
         }
         //if the bomb key we assigned is pressed
-        if(Input.GetKeyDown(bombKey))
+        if(Input.GetKeyDown(mineKey))
         {
-            //create a new bomb and snap it to the middle of the square we're in
-            Instantiate(mine, new Vector2((Mathf.RoundToInt(transform.position.x/0.64f)*0.64f),
-                (Mathf.RoundToInt(transform.position.y/0.64f) * 0.64f)),mine.transform.rotation);
+            if (this.isLocalPlayer)
+            {
+                this.CmdMine();
+            }
         }
     }
+
+    [Command]
+    void CmdMine()
+    {
+        //create a new bomb and snap it to the middle of the square we're in
+        GameObject newMine =Instantiate(mine, new Vector2((Mathf.RoundToInt(transform.position.x / 0.64f) * 0.64f),
+            (Mathf.RoundToInt(transform.position.y / 0.64f) * 0.64f)), mine.transform.rotation);
+        NetworkServer.Spawn(newMine);
+    }
+
+    [Command]
+    void CmdShoot()
+    {
+
+        //create a new bullet
+        GameObject newBullet = Instantiate(bullet, muzzle.position, Quaternion.identity);
+        //make sure the rotation is right otherwise bullet will just ignore rotation
+        newBullet.transform.rotation = transform.rotation;
+        //ignore collisions with itself (so we don't shoot ourselves)
+        Physics2D.IgnoreCollision(newBullet.GetComponent<CapsuleCollider2D>(), gameObject.GetComponent<BoxCollider2D>());
+        //update time til next shot and ammo
+        timeTilNextShot += 2;
+        ammoCount--;
+        NetworkServer.Spawn(newBullet);
+        Destroy(newBullet, 1.0f);
+    }
+
+  
 
 
 }

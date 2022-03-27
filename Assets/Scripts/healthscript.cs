@@ -6,8 +6,8 @@ using Mirror;
 
 public class healthscript : NetworkBehaviour
 {
-    [Header("Tag for Enemy Bullet")][SerializeField]
-    string EnemyBullet;
+    [Header("Tag for Friendly Bullet")][SerializeField]
+    string friendlyBullet;
 
     [SerializeField]
     private int maxHealth = 10;
@@ -19,14 +19,16 @@ public class healthscript : NetworkBehaviour
     void Start()
     {
         this.currentHealth = this.maxHealth;
+        friendlyBullet = "Bullet" + GetComponent<NetworkIdentity>().netId;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         //if we hit the bullet or the explosion
-        if(collision.gameObject.tag==EnemyBullet|| collision.gameObject.tag == "Explosion")
+        if(collision.GetComponent<bulletScript>().spawnedBy.netId!=GetComponent<NetworkIdentity>().netId|| collision.gameObject.tag == "Explosion")
         {
-            this.TakeDamage(1);      
+            this.TakeDamage(1);
+            Destroy(collision.gameObject);
         }
     }
 

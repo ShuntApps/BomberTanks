@@ -16,13 +16,13 @@ public class fireScript : NetworkBehaviour
     [SerializeField] Transform muzzle;
 
     [Header("Shooting Settings")]
-    public int ammoCount;
+    [SyncVar][SerializeField] int ammoCount;
     float timeTilNextShot=0;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Debug.Log("netID"+GetComponent<NetworkIdentity>().netId);
     }
 
     // Update is called once per frame
@@ -33,9 +33,8 @@ public class fireScript : NetworkBehaviour
         {
             if (this.isLocalPlayer)
             {
-                this.CmdShoot();
-            }
-            
+                this.CmdShoot(GetComponent<NetworkIdentity>());
+            }          
         }
         //if the bomb key we assigned is pressed
         if(Input.GetKeyDown(mineKey))
@@ -57,22 +56,30 @@ public class fireScript : NetworkBehaviour
     }
 
     [Command]
-    void CmdShoot()
+    void CmdShoot(NetworkIdentity netId)
     {
-
         //create a new bullet
         GameObject newBullet = Instantiate(bullet, muzzle.position, Quaternion.identity);
         //make sure the rotation is right otherwise bullet will just ignore rotation
         newBullet.transform.rotation = transform.rotation;
         //ignore collisions with itself (so we don't shoot ourselves)
-        Physics2D.IgnoreCollision(newBullet.GetComponent<CapsuleCollider2D>(), gameObject.GetComponent<BoxCollider2D>());
+        //Physics2D.IgnoreCollision(newBullet.GetComponent<CapsuleCollider2D>(), gameObject.GetComponent<BoxCollider2D>());
         //update time til next shot and ammo
         timeTilNextShot += 2;
         ammoCount--;
-        NetworkServer.Spawn(newBullet);
-        Destroy(newBullet, 1.0f);
+        newBullet.GetComponent<bulletScript>().spawnedBy = netId;
+        //newBullet.tag = "Bullet" + GetComponent<NetworkIdentity>().netId;
+        newBullet.GetComponent<Rigidbody2D>().velocity = -transform.up * 7;
+        NetworkServer.Spawn(newBullet,connectionToClient);
+        Invoke("CmdDestroyThing", 1);
+        
     }
 
+    [Command]
+    void CmdDestroyThing(GameObject thingToDestroy)
+    {
+        NetworkServer.Destroy(thingToDestroy);
+    }
   
 
 
